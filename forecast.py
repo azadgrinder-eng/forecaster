@@ -26,6 +26,7 @@ import shutil
 import statistics
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
@@ -64,9 +65,24 @@ class Market:
 
 
 def _get(url: str, **params) -> dict | list:
-    r = HTTP.get(url, params=params or None, timeout=20)
-    r.raise_for_status()
-    return r.json()
+    # Kalshi in particular rate-limits hard (429), so back off and retry a few times.
+    tries = 6
+    for attempt in range(tries):
+        wait = 1.5 * 2**attempt
+        try:
+            r = HTTP.get(url, params=params or None, timeout=60)
+        except (requests.ConnectionError, requests.Timeout):
+            if attempt == tries - 1:
+                raise
+        else:
+            if r.status_code not in (429, 500, 502, 503, 504) or attempt == tries - 1:
+                r.raise_for_status()
+                return r.json()
+            ra = r.headers.get("Retry-After", "")
+            if ra.isdigit():
+                wait = float(ra)
+        time.sleep(wait)
+    raise RuntimeError("unreachable")
 
 
 def fetch_manifold(url: str) -> Market:
@@ -85,18 +101,25 @@ def fetch_manifold(url: str) -> Market:
     )
 
 
-def _poly_market(m: dict, url: str) -> Market:
-    prob = None
+def _poly_outcomes(m: dict) -> tuple[list[str], list[float]]:
     try:
-        outcomes = json.loads(m.get("outcomes") or "[]")
-        prices = [float(p) for p in json.loads(m.get("outcomePrices") or "[]")]
+        return json.loads(m.get("outcomes") or "[]"), [float(p) for p in json.loads(m.get("outcomePrices") or "[]")]
+    except (ValueError, TypeError):
+        return [], []
+
+
+def _poly_market(m: dict, url: str) -> Market:
+    prob, question = None, m["question"]
+    outcomes, prices = _poly_outcomes(m)
+    if len(prices) == len(outcomes) >= 1:
         idx = outcomes.index("Yes") if "Yes" in outcomes else 0
         prob = prices[idx]
-    except (ValueError, IndexError, TypeError):
-        pass
+        if "Yes" not in outcomes:
+            # e.g. a moneyline ["Team A", "Team B"]: say which side "YES" means
+            question = f"{question} — will the outcome be \"{outcomes[0]}\"?"
     return Market(
         source="Polymarket",
-        question=m["question"],
+        question=question,
         criteria=m.get("description") or "",
         close_time=m.get("endDate") or "",
         market_prob=prob,
@@ -137,12 +160,34 @@ def _kalshi_market(m: dict, url: str, event: dict | None = None) -> Market:
         return None
 
     bid, ask, last = price("yes_bid"), price("yes_ask"), price("last_price")
-    prob = (bid + ask) / 2 if bid and ask else last
-    title = m.get("title") or (event or {}).get("title", "")
+    # Midpoint when the book is tight; with an empty or very wide book fall back to the last trade.
+    book = bid is not None and ask is not None and 0 < ask and bid <= ask
+    if book and ask - bid <= 0.10:
+        prob = (bid + ask) / 2
+    else:
+        prob = last or None  # no tight quote and no trade: no usable price
+    title = (m.get("title") or (event or {}).get("title", "")).replace("**", "")
     sub = m.get("yes_sub_title") or m.get("subtitle") or ""
-    question = f"{title} — {sub}" if sub and sub not in title else title
+    norm = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())  # noqa: E731
+    question = f"{title} — {sub}" if sub and norm(sub) not in norm(title) else title
     criteria = "\n\n".join(x for x in (m.get("rules_primary"), m.get("rules_secondary")) if x)
     return Market("Kalshi", question, criteria, m.get("close_time", ""), prob, url)
+
+
+def _kalshi_series_event(series: str, url: str) -> dict:
+    """A series link (kalshi.com/markets/kxfoo): use its open event if there is exactly one."""
+    try:
+        events = _get(f"{KALSHI}/events", series_ticker=series, status="open", with_nested_markets="true").get("events", [])
+    except requests.HTTPError:
+        events = []
+    if len(events) == 1:
+        return {"event": events[0], "markets": events[0].get("markets", [])}
+    if not events:
+        sys.exit(f"Couldn't find a Kalshi market for {url}")
+    events.sort(key=lambda e: e.get("strike_date") or e.get("event_ticker", ""))
+    lines = "\n".join(f"  {e['event_ticker']}: {e.get('title', '')} {e.get('sub_title', '')}".rstrip() for e in events[:30])
+    sys.exit(f"That Kalshi link is a series with {len(events)} open events. Pass one of these instead, "
+             f"e.g. https://kalshi.com/markets/{events[0]['event_ticker']}\n{lines}")
 
 
 def fetch_kalshi(url: str, pick: str | None) -> Market:
@@ -151,7 +196,10 @@ def fetch_kalshi(url: str, pick: str | None) -> Market:
         return _kalshi_market(_get(f"{KALSHI}/markets/{ticker}")["market"], url)
     except requests.HTTPError:
         pass
-    data = _get(f"{KALSHI}/events/{ticker}", with_nested_markets="true")
+    try:
+        data = _get(f"{KALSHI}/events/{ticker}", with_nested_markets="true")
+    except requests.HTTPError:
+        data = _kalshi_series_event(ticker, url)
     event = data.get("event", {})
     markets = data.get("markets") or event.get("markets") or []
     markets = [m for m in markets if m.get("status") in (None, "active", "open")] or markets
