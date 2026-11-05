@@ -95,8 +95,15 @@ def _days(lo: int, hi: int) -> tuple[datetime, datetime]:
 
 def candidates_manifold(lo: int, hi: int) -> list[dict]:
     start, end = _days(lo, hi)
-    rows = fc._get("https://api.manifold.markets/v0/search-markets", term="", filter="open",
-                   contractType="BINARY", sort="close-date", limit=1000)
+    # Sorted by soonest close, so page until we pass the end of the window.
+    rows: list[dict] = []
+    for offset in range(0, 10_000, 1000):
+        page = fc._get("https://api.manifold.markets/v0/search-markets", term="", filter="open",
+                       contractType="BINARY", sort="close-date", limit=1000, offset=offset)
+        rows += page
+        last = page[-1].get("closeTime") if page else None
+        if len(page) < 1000 or (last and last / 1000 > end.timestamp()):
+            break
     out = []
     for m in rows:
         close = m.get("closeTime")
@@ -116,22 +123,32 @@ def candidates_manifold(lo: int, hi: int) -> list[dict]:
 
 def candidates_polymarket(lo: int, hi: int) -> list[dict]:
     start, end = _days(lo, hi)
-    out = []
-    for offset in (0, 500):
-        rows = fc._get("https://gamma-api.polymarket.com/markets", active="true", closed="false",
-                       end_date_min=iso(start), end_date_max=iso(end), limit=500, offset=offset)
+    # The gamma API caps pages at 100 and refuses deep offsets, so walk the keyset endpoint.
+    # The volume floor drops tens of thousands of untraded auto-generated markets.
+    out, cursor = [], None
+    for _ in range(100):
+        params = dict(active="true", closed="false", end_date_min=iso(start), end_date_max=iso(end),
+                      volume_num_min=100, limit=100)
+        if cursor:
+            params["after_cursor"] = cursor
+        data = fc._get("https://gamma-api.polymarket.com/markets/keyset", **params)
+        rows = data.get("markets") or []
         for m in rows:
-            mk = fc._poly_market(m, f"https://polymarket.com/market/{m.get('slug', '')}")
+            events = m.get("events") or [{}]
+            ev = events[0].get("slug")
+            link = (f"https://polymarket.com/event/{ev}/{m.get('slug', '')}" if ev
+                    else f"https://polymarket.com/market/{m.get('slug', '')}")
+            mk = fc._poly_market(m, link)
             if mk.market_prob is None or not m.get("endDate"):
                 continue
-            events = m.get("events") or [{}]
             out.append({
                 "qid": f"polymarket:{m['id']}", "source": "Polymarket", "source_id": str(m["id"]),
                 "question": mk.question, "criteria": mk.criteria, "url": mk.url, "close_time": m["endDate"],
                 "market_prob": mk.market_prob, "volume": float(m.get("volumeNum") or m.get("volume") or 0),
-                "group": events[0].get("slug") or m["id"],
+                "group": ev or m["id"],
             })
-        if len(rows) < 500:
+        cursor = data.get("next_cursor")
+        if not cursor or not rows:
             break
     return out
 
@@ -139,8 +156,10 @@ def candidates_polymarket(lo: int, hi: int) -> list[dict]:
 def candidates_kalshi(lo: int, hi: int) -> list[dict]:
     start, end = _days(lo, hi)
     out, cursor = [], None
-    for _ in range(5):
-        params = dict(status="open", min_close_ts=int(start.timestamp()), max_close_ts=int(end.timestamp()), limit=1000)
+    for _ in range(50):
+        # mve_filter drops the multi-leg parlays, which otherwise make up most of the listing
+        params = dict(status="open", mve_filter="exclude", min_close_ts=int(start.timestamp()),
+                      max_close_ts=int(end.timestamp()), limit=1000)
         if cursor:
             params["cursor"] = cursor
         data = fc._get(f"{fc.KALSHI}/markets", **params)
@@ -150,7 +169,9 @@ def candidates_kalshi(lo: int, hi: int) -> list[dict]:
             mk = fc._kalshi_market(m, f"https://kalshi.com/markets/{m.get('event_ticker', '')}")
             if mk.market_prob is None:
                 continue
-            vol = m.get("volume_fp") or m.get("volume") or 0
+            vol = float(m.get("volume_fp") or m.get("volume") or 0)
+            if vol <= 0:
+                continue  # never traded: the quote isn't a crowd price
             out.append({
                 "qid": f"kalshi:{m['ticker']}", "source": "Kalshi", "source_id": m["ticker"],
                 "question": mk.question, "criteria": mk.criteria, "url": mk.url, "close_time": m.get("close_time", ""),
@@ -335,16 +356,19 @@ def check_resolution(q: dict) -> str | None:
         m = fc._get(f"https://gamma-api.polymarket.com/markets/{sid}")
         if not m.get("closed"):
             return None
-        try:
-            outcomes = json.loads(m.get("outcomes") or "[]")
-            prices = [float(p) for p in json.loads(m.get("outcomePrices") or "[]")]
-            yes = prices[outcomes.index("Yes") if "Yes" in outcomes else 0]
-        except (ValueError, IndexError):
+        status = m.get("umaResolutionStatus")
+        if status and status != "resolved":
+            return None  # outcome proposed or disputed, not final yet
+        outcomes, prices = fc._poly_outcomes(m)
+        if not prices or len(prices) != len(outcomes):
             return None
+        yes = prices[outcomes.index("Yes") if "Yes" in outcomes else 0]
         if yes >= 0.99:
             return "yes"
         if yes <= 0.01:
             return "no"
+        if status == "resolved" and abs(yes - 0.5) < 0.01:
+            return "void"  # resolved 50-50 (cancelled / unknowable)
         return None  # closed but not settled yet
     if src == "Kalshi":
         m = fc._get(f"{fc.KALSHI}/markets/{sid}")["market"]
