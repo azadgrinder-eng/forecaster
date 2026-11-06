@@ -1,0 +1,35 @@
+== 2026-11-06T06:13:31+00:00 daily run
+Resolving…
+Resolved 0 of 0 open questions.
+Collecting…
+  Manifold: 268 eligible markets
+  Polymarket: 2645 eligible markets
+  Kalshi: 5077 eligible markets
+Collected 15 new questions (7 liquid, 8 thin).
+Forecasting 15 questions with opus (5 samples each)…
+  kalshi:KXNCAAFWINS-26MSST-8: 4.0% (market at collection 6.0%)
+  manifold:nQQlQgdPLZ: 1.5% (market at collection 9.7%)
+  manifold:q9yNPEqAd8: 97.0% (market at collection 84.1%)
+  polymarket:6365364: 30.0% (market at collection 80.5%)
+  kalshi:KXUFCFIGHT-26NOV14HARNUN-NUN: 36.0% (market at collection 37.5%)
+  polymarket:6656056: 55.0% (market at collection 51.0%)
+  manifold:dLEZL5CLgc: 15.0% (market at collection 34.2%)
+  kalshi:KXPCSAHOUSEVOTE-26SEP-DEC15: 25.0% (market at collection 42.0%)
+  polymarket:6282802: 10.0% (market at collection 7.5%)
+  manifold:5E2INgNAlz: 3.0% (market at collection 11.6%)
+  polymarket:5176725: 13.0% (market at collection 3.8%)
+  kalshi:KXBTCMINMON-BTC-26NOV30-7250000: 54.0% (market at collection 67.5%)
+  kalshi:KXHURCAT-26LALA-T3: 96.0% (market at collection 94.0%)
+  manifold:IRR906pC9u: 14.0% (market at collection 20.0%)
+  manifold:SvpCN8Bjkvp1ngm8avGz: 80.0% (market at collection 71.0%)
+Plan usage this run: 90 Claude calls (≈$15.62 at API prices, not billed on a plan)
+# Forecaster scorecard
+
+Generated 2026-11-06T06:47:02+00:00. Lower Brier and log loss are better.
+
+Questions collected: 15. Resolved yes/no: 0. Voided: 0.
+
+## Agreement check (no waiting needed)
+
+On 7 liquid markets, v0 sits on average **14.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+
