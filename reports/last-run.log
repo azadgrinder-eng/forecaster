@@ -1,35 +1,51 @@
-== 2026-11-08T04:23:38+00:00 daily run
+== 2026-11-09T04:24:10+00:00 daily run
 Resolving…
-Resolved 0 of 30 open questions.
+Resolved 4 of 45 open questions.
 Collecting…
-  Manifold: 249 eligible markets
-  Polymarket: 2629 eligible markets
-  Kalshi: 5294 eligible markets
+  Manifold: 245 eligible markets
+  Polymarket: 2613 eligible markets
+  Kalshi: 5069 eligible markets
 Collected 15 new questions (8 liquid, 7 thin).
 Forecasting 15 questions with opus (5 samples each)…
-  manifold:LAcRZtCRAz: 6.0% (market at collection 9.8%)
-  polymarket:5339986: 80.0% (market at collection 88.0%)
-  kalshi:KXNCAAFGAME-26NOV14HARVPENN-PENN: 22.0% (market at collection 47.0%)
-  polymarket:6619280: 0.7% (market at collection 3.5%)
-  manifold:n8uEQOcAyq: 45.0% (market at collection 52.5%)
-  kalshi:KXGEMINI-NEXTPRO-26DEC01: 13.0% (market at collection 8.5%)
-  polymarket:5787490: 50.0% (market at collection 40.5%)
-  manifold:lsAKLN4oeXxmSlW2VBsp: 30.0% (market at collection 49.4%)
-  kalshi:KXATPCHALLENGERMATCH-26NOV07ZHUFAN-ZHU: 50.0% (market at collection 40.5%)
-  polymarket:6029343: 2.0% (market at collection 5.6%)
-  manifold:SUpqSyu2Cs: 3.0% (market at collection 20.8%)
-  kalshi:KXWTAMATCH-26NOV08LIUEAL-EAL: 69.0% (market at collection 69.5%)
-  polymarket:4664660: 10.0% (market at collection 22.0%)
-  manifold:yAA259LCdu: 1.5% (market at collection 3.8%)
-  kalshi:KXNADELLAMENTION-26NOV18-GITH: 47.0% (market at collection 44.0%)
-Plan usage this run: 90 Claude calls (≈$15.09 at API prices, not billed on a plan)
+  kalshi:KXNCAAFGAME-26NOV14TEXLSU-LSU: 50.0% (market at collection 60.5%)
+  polymarket:5714365: 8.0% (market at collection 16.0%)
+  polymarket:5166841: 33.0% (market at collection 58.0%)
+  kalshi:KXNCAAFWINS-26TENN-10: 23.0% (market at collection 28.0%)
+  manifold:3QthtsX5hN92RdGH0vqD: 7.0% (market at collection 12.7%)
+  manifold:0Op29CNUNt: 22.0% (market at collection 12.9%)
+  polymarket:6253456: 12.0% (market at collection 22.9%)
+  kalshi:KXITFMATCH-26NOV08FARSUR-FAR: 30.0% (market at collection 39.5%)
+  polymarket:4664549: 27.0% (market at collection 5.1%)
+  kalshi:KXNFLWEEKGAMEHIGH-26W9-DALIND: 0.5% (market at collection 10.0%)
+  manifold:Aq22ZAEPsR: 2.0% (market at collection 54.7%)
+  manifold:th65lQp2Sy: 42.0% (market at collection 40.1%)
+  polymarket:6507384: 15.0% (market at collection 18.5%)
+  kalshi:KXUFCFIGHT-26NOV14GANHOK-HOK: 32.0% (market at collection 34.5%)
+  polymarket:6638926: 9.0% (market at collection 7.5%)
+Plan usage this run: 90 Claude calls (≈$15.72 at API prices, not billed on a plan)
 # Forecaster scorecard
 
-Generated 2026-11-08T04:54:09+00:00. Lower Brier and log loss are better.
+Generated 2026-11-09T04:56:52+00:00. Lower Brier and log loss are better.
 
-Questions collected: 45. Resolved yes/no: 0. Voided: 0.
+Questions collected: 60. Resolved yes/no: 4. Voided: 0.
 
 ## Agreement check (no waiting needed)
 
-On 22 liquid markets, v0 sits on average **9.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 30 liquid markets, v0 sits on average **10.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+
+## v0: all resolved questions
+
+| Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
+| --- | --- | --- | --- | --- |
+| Market price at collection | 4 | 0.1632 | 0.454 | |
+| v0 (median) | 4 | 0.1823 | 0.486 | +0.0192 (-0.0045 to +0.0428) |
+| v0, mean of log-odds | 4 | 0.1817 | 0.484 | +0.0186 (-0.0085 to +0.0456) |
+| v0, capped 2-98% | 4 | 0.1823 | 0.486 | +0.0192 (-0.0045 to +0.0428) |
+
+### v0: calibration
+
+| Forecast range | n | Avg forecast | Actually happened |
+| --- | --- | --- | --- |
+| 0-10% | 2 | 4% | 0% |
+| 50-70% | 2 | 60% | 0% |
 
