@@ -1,53 +1,60 @@
-== 2026-11-10T04:24:23+00:00 daily run
+== 2026-11-11T04:24:25+00:00 daily run
 Resolving…
-Resolved 3 of 56 open questions.
+Resolved 3 of 68 open questions.
 Collecting…
-  Manifold: 251 eligible markets
-  Polymarket: 2549 eligible markets
-  Kalshi: 5181 eligible markets
+  Manifold: 257 eligible markets
+  Polymarket: 2489 eligible markets
+  Kalshi: failed (429 Client Error: Too Many Requests for url: https://api.elections.kalshi.com/trade-api/v2/markets?status=open&mve_filter=exclude&min_close_ts=1794975884&max_close_ts=1798259084&limit=1000); skipping it today
 Collected 15 new questions (7 liquid, 8 thin).
 Forecasting 15 questions with opus (5 samples each)…
-  manifold:eAi22XXUzipXaZa7yhOz: 2.5% (market at collection 15.0%)
-  polymarket:4170752: 73.0% (market at collection 81.0%)
-  polymarket:6598485: 57.0% (market at collection 68.0%)
-  kalshi:KXF1TOP5-LASV26-VER: 73.0% (market at collection 80.5%)
-  kalshi:KXNFLNEXTTEAM-26JTAYLOR28-GB: 5.0% (market at collection 4.5%)
-  manifold:N5O2RlE0N0: 96.5% (market at collection 92.4%)
-  polymarket:6757458: 62.0% (market at collection 72.5%)
-  polymarket:5211896: 30.0% (market at collection 18.5%)
-  kalshi:KXNFLNEXTTEAM-26JDOWNS2-PIT: 16.0% (market at collection 23.0%)
-  kalshi:KXRUSDIESELIMPORT-27-26DEC01: 9.0% (market at collection 12.0%)
-  manifold:JkHGm7I55ct9hlPmoVl4: 1.2% (market at collection 10.0%)
-  polymarket:6831495: 64.0% (market at collection 59.5%)
-  polymarket:5154700: 35.0% (market at collection 34.8%)
-  kalshi:KX5YRDIRLM-26NOV30L-T4.47: 25.0% (market at collection 28.0%)
-  kalshi:KXRT-HUN-77: 50.0% (market at collection 41.5%)
-Plan usage this run: 90 Claude calls (≈$15.52 at API prices, not billed on a plan)
+  manifold:yvO8aFh9mPu3ERkbHUgO: 14.0% (market at collection 9.7%)
+  polymarket:2695678: 7.0% (market at collection 6.4%)
+  polymarket:6886184: 49.0% (market at collection 61.5%)
+  manifold:hnd9I6IdIR: 2.0% (market at collection 18.6%)
+  manifold:tyNgzgQQQc: 27.0% (market at collection 75.9%)
+  polymarket:4397033: 43.0% (market at collection 37.8%)
+  polymarket:6804000: 10.5% (market at collection 15.0%)
+  manifold:ndCIRA9Rc0: 4.0% (market at collection 28.3%)
+  polymarket:4338145: 6.0% (market at collection 4.5%)
+  polymarket:6891671: 11.5% (market at collection 14.0%)
+  manifold:Ng0s0p2hnI: 14.0% (market at collection 46.6%)
+  polymarket:5401796: 64.0% (market at collection 88.0%)
+  polymarket:6029119: 93.0% (market at collection 89.0%)
+  manifold:C6CUq2U6NI: 8.0% (market at collection 11.2%)
+  polymarket:5336561: 86.0% (market at collection 84.0%)
+Plan usage this run: 90 Claude calls (≈$16.98 at API prices, not billed on a plan)
 # Forecaster scorecard
 
-Generated 2026-11-10T04:56:47+00:00. Lower Brier and log loss are better.
+Generated 2026-11-11T04:57:28+00:00. Lower Brier and log loss are better.
 
-Questions collected: 75. Resolved yes/no: 6. Voided: 1.
+Questions collected: 90. Resolved yes/no: 9. Voided: 1.
 
 ## Agreement check (no waiting needed)
 
-On 37 liquid markets, v0 sits on average **9.5 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 44 liquid markets, v0 sits on average **10.0 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 6 | 0.2612 | 0.727 | |
-| v0 (median) | 6 | 0.2379 | 0.636 | -0.0233 (-0.0729 to +0.0259) |
-| v0, mean of log-odds | 6 | 0.2387 | 0.637 | -0.0225 (-0.0709 to +0.0252) |
-| v0, capped 2-98% | 6 | 0.2379 | 0.636 | -0.0233 (-0.0729 to +0.0259) |
+| Market price at collection | 9 | 0.1853 | 0.550 | |
+| v0 (median) | 9 | 0.2159 | 0.578 | +0.0306 (-0.0450 to +0.1260) |
+| v0, mean of log-odds | 9 | 0.2167 | 0.580 | +0.0314 (-0.0442 to +0.1270) |
+| v0, capped 2-98% | 9 | 0.2160 | 0.579 | +0.0306 (-0.0450 to +0.1260) |
+
+### v0: thin markets
+
+| Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
+| --- | --- | --- | --- | --- |
+| Market price at collection | 6 | 0.1652 | 0.507 | |
+| v0 | 6 | 0.1479 | 0.411 | -0.0173 (-0.0625 to +0.0260) |
 
 ### v0: calibration
 
 | Forecast range | n | Avg forecast | Actually happened |
 | --- | --- | --- | --- |
-| 0-10% | 2 | 4% | 0% |
-| 10-30% | 1 | 22% | 100% |
-| 30-50% | 1 | 30% | 0% |
+| 0-10% | 3 | 3% | 0% |
+| 10-30% | 2 | 19% | 50% |
+| 30-50% | 2 | 30% | 50% |
 | 50-70% | 2 | 60% | 0% |
 
