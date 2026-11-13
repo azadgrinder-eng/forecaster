@@ -1,28 +1,28 @@
 # Forecaster scorecard
 
-Generated 2026-11-12T04:55:43+00:00. Lower Brier and log loss are better.
+Generated 2026-11-13T04:58:26+00:00. Lower Brier and log loss are better.
 
-Questions collected: 105. Resolved yes/no: 9. Voided: 1.
+Questions collected: 120. Resolved yes/no: 11. Voided: 1.
 
 ## Agreement check (no waiting needed)
 
-On 50 liquid markets, v0 sits on average **9.7 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 57 liquid markets, v0 sits on average **9.6 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 9 | 0.1853 | 0.550 | |
-| v0 (median) | 9 | 0.2159 | 0.578 | +0.0306 (-0.0450 to +0.1260) |
-| v0, mean of log-odds | 9 | 0.2167 | 0.580 | +0.0314 (-0.0442 to +0.1270) |
-| v0, capped 2-98% | 9 | 0.2160 | 0.579 | +0.0306 (-0.0450 to +0.1260) |
+| Market price at collection | 11 | 0.1873 | 0.555 | |
+| v0 (median) | 11 | 0.2234 | 0.601 | +0.0361 (-0.0277 to +0.1142) |
+| v0, mean of log-odds | 11 | 0.2249 | 0.605 | +0.0377 (-0.0262 to +0.1154) |
+| v0, capped 2-98% | 11 | 0.2234 | 0.603 | +0.0362 (-0.0276 to +0.1142) |
 
 ### v0: thin markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 6 | 0.1652 | 0.507 | |
-| v0 | 6 | 0.1479 | 0.411 | -0.0173 (-0.0625 to +0.0260) |
+| Market price at collection | 7 | 0.1825 | 0.544 | |
+| v0 | 7 | 0.1700 | 0.467 | -0.0125 (-0.0536 to +0.0253) |
 
 ### v0: calibration
 
@@ -30,5 +30,5 @@ On 50 liquid markets, v0 sits on average **9.7 points** from the market price re
 | --- | --- | --- | --- |
 | 0-10% | 3 | 3% | 0% |
 | 10-30% | 2 | 19% | 50% |
-| 30-50% | 2 | 30% | 50% |
-| 50-70% | 2 | 60% | 0% |
+| 30-50% | 3 | 35% | 67% |
+| 50-70% | 3 | 58% | 33% |

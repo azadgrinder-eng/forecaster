@@ -1,53 +1,53 @@
-== 2026-11-12T04:24:09+00:00 daily run
+== 2026-11-13T04:24:05+00:00 daily run
 Resolving…
-Resolved 0 of 80 open questions.
+Resolved 2 of 95 open questions.
 Collecting…
-  Manifold: 255 eligible markets
-  Polymarket: 2483 eligible markets
-  Kalshi: 5231 eligible markets
-Collected 15 new questions (6 liquid, 9 thin).
+  Manifold: 247 eligible markets
+  Polymarket: 2526 eligible markets
+  Kalshi: 5239 eligible markets
+Collected 15 new questions (7 liquid, 8 thin).
 Forecasting 15 questions with opus (5 samples each)…
-  polymarket:4620900: 86.0% (market at collection 96.4%)
-  kalshi:KXGOVTSHUTDOWN-26DEC12: 17.0% (market at collection 38.5%)
-  kalshi:KXNCAAFTOPAPRANK-26W12T25-OKST: 53.0% (market at collection 91.0%)
-  manifold:EcQQEQ88l2: 62.0% (market at collection 58.6%)
-  polymarket:6172409: 11.0% (market at collection 14.0%)
-  polymarket:6594168: 95.0% (market at collection 95.5%)
-  kalshi:KXNCAAFWINS-26FLA-8: 14.0% (market at collection 19.5%)
-  manifold:gHHu8qNsCcS4vdfMOoE7: 96.0% (market at collection 90.0%)
-  polymarket:6977048: 45.0% (market at collection 46.5%)
-  kalshi:KXMAMDANIMENTION-26NOV18-CHIL: 80.0% (market at collection 55.0%)
-  polymarket:6268103: 8.0% (market at collection 6.3%)
-  kalshi:KXNCAAFWINS-26IND-11: 56.0% (market at collection 60.0%)
-  manifold:ZEAChuPANA: 12.0% (market at collection 40.0%)
-  kalshi:KXF1BIGGESTMOVER-LASV26-HAM: 7.0% (market at collection 3.5%)
-  polymarket:6027280: 19.0% (market at collection 17.0%)
-Plan usage this run: 90 Claude calls (≈$15.97 at API prices, not billed on a plan)
+  manifold:Iz5sI5n8q9: 22.0% (market at collection 33.0%)
+  kalshi:KXCBDECISIONCANADA-26DEC-H0: 57.0% (market at collection 50.5%)
+  manifold:ROpq22nCSA: 72.0% (market at collection 66.7%)
+  polymarket:6439064: 18.0% (market at collection 63.0%)
+  polymarket:3581449: 17.0% (market at collection 13.2%)
+  kalshi:KXSILVERMON-26NOV3017-T49.99: 48.0% (market at collection 56.5%)
+  kalshi:KXLIGUE1GAME-26NOV21NICPSG-PSG: 57.0% (market at collection 68.0%)
+  manifold:Ip08yCSC5n: 11.0% (market at collection 29.9%)
+  polymarket:6757652: 30.0% (market at collection 37.0%)
+  polymarket:3215008: 73.0% (market at collection 88.5%)
+  kalshi:KXTOPALBUMRECORDOR-YSPSFAGSIL-2: 9.0% (market at collection 5.0%)
+  kalshi:KXNCAAFWINS-26ILL-7: 74.0% (market at collection 62.0%)
+  polymarket:6436446: 53.0% (market at collection 67.5%)
+  manifold:CAqdc6E8gh: 85.0% (market at collection 92.7%)
+  polymarket:814613: 23.0% (market at collection 37.4%)
+Plan usage this run: 90 Claude calls (≈$16.53 at API prices, not billed on a plan)
 # Forecaster scorecard
 
-Generated 2026-11-12T04:55:43+00:00. Lower Brier and log loss are better.
+Generated 2026-11-13T04:58:26+00:00. Lower Brier and log loss are better.
 
-Questions collected: 105. Resolved yes/no: 9. Voided: 1.
+Questions collected: 120. Resolved yes/no: 11. Voided: 1.
 
 ## Agreement check (no waiting needed)
 
-On 50 liquid markets, v0 sits on average **9.7 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 57 liquid markets, v0 sits on average **9.6 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 9 | 0.1853 | 0.550 | |
-| v0 (median) | 9 | 0.2159 | 0.578 | +0.0306 (-0.0450 to +0.1260) |
-| v0, mean of log-odds | 9 | 0.2167 | 0.580 | +0.0314 (-0.0442 to +0.1270) |
-| v0, capped 2-98% | 9 | 0.2160 | 0.579 | +0.0306 (-0.0450 to +0.1260) |
+| Market price at collection | 11 | 0.1873 | 0.555 | |
+| v0 (median) | 11 | 0.2234 | 0.601 | +0.0361 (-0.0277 to +0.1142) |
+| v0, mean of log-odds | 11 | 0.2249 | 0.605 | +0.0377 (-0.0262 to +0.1154) |
+| v0, capped 2-98% | 11 | 0.2234 | 0.603 | +0.0362 (-0.0276 to +0.1142) |
 
 ### v0: thin markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 6 | 0.1652 | 0.507 | |
-| v0 | 6 | 0.1479 | 0.411 | -0.0173 (-0.0625 to +0.0260) |
+| Market price at collection | 7 | 0.1825 | 0.544 | |
+| v0 | 7 | 0.1700 | 0.467 | -0.0125 (-0.0536 to +0.0253) |
 
 ### v0: calibration
 
@@ -55,6 +55,6 @@ On 50 liquid markets, v0 sits on average **9.7 points** from the market price re
 | --- | --- | --- | --- |
 | 0-10% | 3 | 3% | 0% |
 | 10-30% | 2 | 19% | 50% |
-| 30-50% | 2 | 30% | 50% |
-| 50-70% | 2 | 60% | 0% |
+| 30-50% | 3 | 35% | 67% |
+| 50-70% | 3 | 58% | 33% |
 
