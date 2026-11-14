@@ -1,21 +1,28 @@
 # Forecaster scorecard
 
-Generated 2026-11-13T04:58:26+00:00. Lower Brier and log loss are better.
+Generated 2026-11-14T04:56:39+00:00. Lower Brier and log loss are better.
 
-Questions collected: 120. Resolved yes/no: 11. Voided: 1.
+Questions collected: 135. Resolved yes/no: 12. Voided: 1.
 
 ## Agreement check (no waiting needed)
 
-On 57 liquid markets, v0 sits on average **9.6 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 63 liquid markets, v0 sits on average **10.0 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 11 | 0.1873 | 0.555 | |
-| v0 (median) | 11 | 0.2234 | 0.601 | +0.0361 (-0.0277 to +0.1142) |
-| v0, mean of log-odds | 11 | 0.2249 | 0.605 | +0.0377 (-0.0262 to +0.1154) |
-| v0, capped 2-98% | 11 | 0.2234 | 0.603 | +0.0362 (-0.0276 to +0.1142) |
+| Market price at collection | 12 | 0.1729 | 0.520 | |
+| v0 (median) | 12 | 0.2156 | 0.588 | +0.0427 (-0.0172 to +0.1152) |
+| v0, mean of log-odds | 12 | 0.2175 | 0.592 | +0.0446 (-0.0153 to +0.1172) |
+| v0, capped 2-98% | 12 | 0.2156 | 0.590 | +0.0428 (-0.0171 to +0.1152) |
+
+### v0: liquid markets
+
+| Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
+| --- | --- | --- | --- | --- |
+| Market price at collection | 5 | 0.1594 | 0.486 | |
+| v0 | 5 | 0.2795 | 0.759 | +0.1200 (+0.0038 to +0.2792) |
 
 ### v0: thin markets
 
@@ -31,4 +38,4 @@ On 57 liquid markets, v0 sits on average **9.6 points** from the market price re
 | 0-10% | 3 | 3% | 0% |
 | 10-30% | 2 | 19% | 50% |
 | 30-50% | 3 | 35% | 67% |
-| 50-70% | 3 | 58% | 33% |
+| 50-70% | 4 | 59% | 50% |
