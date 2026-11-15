@@ -26,6 +26,7 @@ import math
 import random
 import statistics
 import sys
+import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
@@ -48,6 +49,7 @@ MIN_PRICE, MAX_PRICE = 0.03, 0.97
 EXCLUDE_WORDS = ["up or down", "o/u", "over/under", "spread", "points scored", "total goals",
                  "price of bitcoin", "price of ethereum", "highest temperature", "tweets"]
 # Volume above which a market counts as "liquid" (each site uses its own units).
+RETRY_SOURCE_AFTER = 300  # seconds to wait before retrying a market site that failed during collection
 LIQUID = {"Manifold": 50, "Polymarket": 100_000, "Kalshi": 20_000}  # bettors / USD volume / contracts
 
 
@@ -162,7 +164,7 @@ def candidates_kalshi(lo: int, hi: int) -> list[dict]:
                       max_close_ts=int(end.timestamp()), limit=1000)
         if cursor:
             params["cursor"] = cursor
-        data = fc._get(f"{fc.KALSHI}/markets", **params)
+        data = fc._get(f"{fc.KALSHI}/markets", _patience=600, **params)
         for m in data.get("markets", []):
             if m.get("ticker", "").startswith("KXMVE") or m.get("market_type", "binary") != "binary":
                 continue  # multi-leg parlays
@@ -238,14 +240,25 @@ def cmd_collect(args) -> list[dict]:
     have = {q["qid"] for q in existing}
     open_groups = {f"{q['source']}:{q.get('group')}" for q in existing
                    if q["qid"] not in {r["qid"] for r in read_jsonl(RESOLUTIONS)}}
-    cands = []
+    cands, failed = [], []
     for name, fn in SOURCES.items():
         try:
             got = [c for c in fn(args.min_days, args.max_days) if eligible(c) and c["qid"] not in have]
             print(f"  {name}: {len(got)} eligible markets")
             cands += got
         except Exception as e:
-            print(f"  {name}: failed ({e}); skipping it today", file=sys.stderr)
+            print(f"  {name}: failed ({e})", file=sys.stderr)
+            failed.append((name, fn))
+    for name, fn in failed:
+        # a rate limit usually clears within minutes, so give a failed source one more go before dropping it
+        print(f"  {name}: retrying in {RETRY_SOURCE_AFTER // 60} minutes…", file=sys.stderr)
+        time.sleep(RETRY_SOURCE_AFTER)
+        try:
+            got = [c for c in fn(args.min_days, args.max_days) if eligible(c) and c["qid"] not in have]
+            print(f"  {name}: {len(got)} eligible markets (on retry)")
+            cands += got
+        except Exception as e:
+            print(f"  {name}: failed again ({e}); skipping it today", file=sys.stderr)
     seed = int(now().strftime("%Y%m%d"))
     picked = select(cands, args.n, open_groups, seed)
     for c in picked:

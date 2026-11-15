@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import re
 import shutil
 import statistics
@@ -64,25 +65,39 @@ class Market:
     options: list[str] = field(default_factory=list)  # filled when an event has several markets
 
 
-def _get(url: str, **params) -> dict | list:
-    # Kalshi in particular rate-limits hard (429), so back off and retry a few times.
-    tries = 6
-    for attempt in range(tries):
-        wait = 1.5 * 2**attempt
+_MIN_GAP = {"api.elections.kalshi.com": 1.0}  # seconds between requests to hosts that rate-limit hard
+_last_call: dict[str, float] = {}
+
+
+def _get(url: str, _patience: float = 120, **params) -> dict | list:
+    """GET JSON, pacing requests to rate-limited hosts and retrying 429s / 5xx with
+    jittered backoff (honouring Retry-After) for up to `_patience` seconds."""
+    host = urlparse(url).hostname or ""
+    gap = _MIN_GAP.get(host, 0)
+    deadline = time.monotonic() + _patience
+    attempt = 0
+    while True:
+        wait_gap = _last_call.get(host, 0) + gap - time.monotonic()
+        if wait_gap > 0:
+            time.sleep(wait_gap)
+        _last_call[host] = time.monotonic()
+        wait = min(60.0, 2.0 * 2**attempt) * random.uniform(0.75, 1.25)
         try:
             r = HTTP.get(url, params=params or None, timeout=60)
         except (requests.ConnectionError, requests.Timeout):
-            if attempt == tries - 1:
+            if time.monotonic() + wait > deadline:
                 raise
         else:
-            if r.status_code not in (429, 500, 502, 503, 504) or attempt == tries - 1:
+            if r.status_code not in (429, 500, 502, 503, 504):
                 r.raise_for_status()
                 return r.json()
             ra = r.headers.get("Retry-After", "")
             if ra.isdigit():
-                wait = float(ra)
+                wait = max(wait, float(ra))
+            if time.monotonic() + wait > deadline:
+                r.raise_for_status()
+        attempt += 1
         time.sleep(wait)
-    raise RuntimeError("unreachable")
 
 
 def fetch_manifold(url: str) -> Market:
