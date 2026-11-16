@@ -20,3 +20,9 @@
 {"qid": "kalshi:KXUFCFIGHT-26NOV14GANHOK-HOK", "outcome": "no", "resolved_seen_at": "2026-11-16T05:03:22+00:00"}
 {"qid": "polymarket:4397033", "outcome": "yes", "resolved_seen_at": "2026-11-16T05:03:27+00:00"}
 {"qid": "kalshi:KXITFWMATCH-26NOV13SAWWAT-WAT", "outcome": "yes", "resolved_seen_at": "2026-11-16T05:03:44+00:00"}
+{"qid": "polymarket:6618497", "outcome": "no", "resolved_seen_at": "2026-11-15T04:23:54+00:00"}
+{"qid": "kalshi:KXUFCFIGHT-26NOV14JOHSUS-SUS", "outcome": "void", "resolved_seen_at": "2026-11-15T04:23:56+00:00"}
+{"qid": "kalshi:KXNCAAFGAME-26NOV14HARVPENN-PENN", "outcome": "no", "resolved_seen_at": "2026-11-15T04:23:58+00:00"}
+{"qid": "polymarket:6507384", "outcome": "yes", "resolved_seen_at": "2026-11-15T04:24:03+00:00"}
+{"qid": "polymarket:4397033", "outcome": "yes", "resolved_seen_at": "2026-11-15T04:24:09+00:00"}
+{"qid": "kalshi:KXITFWMATCH-26NOV13SAWWAT-WAT", "outcome": "yes", "resolved_seen_at": "2026-11-15T04:24:26+00:00"}

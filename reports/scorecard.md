@@ -1,12 +1,12 @@
 # Forecaster scorecard
 
-Generated 2026-11-16T05:35:09+00:00. Lower Brier and log loss are better.
+Generated 2026-11-16T05:35:46+00:00. Lower Brier and log loss are better.
 
-Questions collected: 150. Resolved yes/no: 20. Voided: 2.
+Questions collected: 165. Resolved yes/no: 20. Voided: 2.
 
 ## Agreement check (no waiting needed)
 
-On 70 liquid markets, v0 sits on average **9.8 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 74 liquid markets, v0 sits on average **9.4 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
