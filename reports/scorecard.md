@@ -1,21 +1,21 @@
 # Forecaster scorecard
 
-Generated 2026-11-17T05:07:32+00:00. Lower Brier and log loss are better.
+Generated 2026-11-18T05:02:55+00:00. Lower Brier and log loss are better.
 
-Questions collected: 180. Resolved yes/no: 24. Voided: 2.
+Questions collected: 195. Resolved yes/no: 27. Voided: 2.
 
 ## Agreement check (no waiting needed)
 
-On 83 liquid markets, v0 sits on average **9.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 90 liquid markets, v0 sits on average **8.8 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 24 | 0.2478 | 0.708 | |
-| v0 (median) | 24 | 0.2223 | 0.628 | -0.0255 (-0.0811 to +0.0294) |
-| v0, mean of log-odds | 24 | 0.2233 | 0.632 | -0.0245 (-0.0807 to +0.0305) |
-| v0, capped 2-98% | 24 | 0.2224 | 0.629 | -0.0255 (-0.0811 to +0.0294) |
+| Market price at collection | 27 | 0.2209 | 0.638 | |
+| v0 (median) | 27 | 0.1991 | 0.568 | -0.0218 (-0.0720 to +0.0272) |
+| v0, mean of log-odds | 27 | 0.2000 | 0.571 | -0.0209 (-0.0717 to +0.0285) |
+| v0, capped 2-98% | 27 | 0.1992 | 0.569 | -0.0217 (-0.0720 to +0.0273) |
 
 ### v0: liquid markets
 
@@ -28,15 +28,15 @@ On 83 liquid markets, v0 sits on average **9.1 points** from the market price re
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 10 | 0.2327 | 0.688 | |
-| v0 | 10 | 0.1521 | 0.431 | -0.0807 (-0.1820 to -0.0027) |
+| Market price at collection | 13 | 0.1803 | 0.547 | |
+| v0 | 13 | 0.1201 | 0.352 | -0.0602 (-0.1407 to +0.0000) |
 
 ### v0: calibration
 
 | Forecast range | n | Avg forecast | Actually happened |
 | --- | --- | --- | --- |
-| 0-10% | 4 | 3% | 0% |
+| 0-10% | 6 | 3% | 0% |
 | 10-30% | 7 | 16% | 43% |
 | 30-50% | 6 | 36% | 50% |
 | 50-70% | 6 | 57% | 33% |
-| 70-90% | 1 | 70% | 100% |
+| 70-90% | 2 | 75% | 100% |
