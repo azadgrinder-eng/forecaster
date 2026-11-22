@@ -1,43 +1,43 @@
 # Forecaster scorecard
 
-Generated 2026-11-21T05:02:38+00:00. Lower Brier and log loss are better.
+Generated 2026-11-22T05:01:59+00:00. Lower Brier and log loss are better.
 
-Questions collected: 240. Resolved yes/no: 35. Voided: 2.
+Questions collected: 255. Resolved yes/no: 37. Voided: 2.
 
 ## Agreement check (no waiting needed)
 
-On 113 liquid markets, v0 sits on average **8.9 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 121 liquid markets, v0 sits on average **9.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 35 | 0.2101 | 0.604 | |
-| v0 (median) | 35 | 0.2185 | 0.611 | +0.0083 (-0.0378 to +0.0566) |
-| v0, mean of log-odds | 35 | 0.2200 | 0.617 | +0.0099 (-0.0370 to +0.0584) |
-| v0, capped 2-98% | 35 | 0.2185 | 0.612 | +0.0083 (-0.0378 to +0.0566) |
+| Market price at collection | 37 | 0.2022 | 0.586 | |
+| v0 (median) | 37 | 0.2119 | 0.596 | +0.0098 (-0.0347 to +0.0539) |
+| v0, mean of log-odds | 37 | 0.2134 | 0.602 | +0.0112 (-0.0335 to +0.0556) |
+| v0, capped 2-98% | 37 | 0.2120 | 0.597 | +0.0098 (-0.0347 to +0.0539) |
 
 ### v0: liquid markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 17 | 0.2294 | 0.648 | |
-| v0 | 17 | 0.2611 | 0.736 | +0.0318 (-0.0242 to +0.0953) |
+| Market price at collection | 18 | 0.2223 | 0.633 | |
+| v0 | 18 | 0.2569 | 0.726 | +0.0346 (-0.0203 to +0.0947) |
 
 ### v0: thin markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 18 | 0.1920 | 0.562 | |
-| v0 | 18 | 0.1781 | 0.494 | -0.0139 (-0.0860 to +0.0504) |
+| Market price at collection | 19 | 0.1831 | 0.541 | |
+| v0 | 19 | 0.1693 | 0.474 | -0.0137 (-0.0781 to +0.0485) |
 
 ### v0: calibration
 
 | Forecast range | n | Avg forecast | Actually happened |
 | --- | --- | --- | --- |
 | 0-10% | 8 | 3% | 0% |
-| 10-30% | 9 | 16% | 56% |
+| 10-30% | 10 | 16% | 50% |
 | 30-50% | 7 | 38% | 57% |
-| 50-70% | 6 | 57% | 33% |
+| 50-70% | 7 | 57% | 43% |
 | 70-90% | 4 | 78% | 75% |
 | 90-100% | 1 | 97% | 100% |
