@@ -1,43 +1,44 @@
 # Forecaster scorecard
 
-Generated 2026-11-22T05:01:59+00:00. Lower Brier and log loss are better.
+Generated 2026-11-23T05:03:39+00:00. Lower Brier and log loss are better.
 
-Questions collected: 255. Resolved yes/no: 37. Voided: 2.
+Questions collected: 270. Resolved yes/no: 45. Voided: 2.
 
 ## Agreement check (no waiting needed)
 
-On 121 liquid markets, v0 sits on average **9.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 128 liquid markets, v0 sits on average **9.0 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 37 | 0.2022 | 0.586 | |
-| v0 (median) | 37 | 0.2119 | 0.596 | +0.0098 (-0.0347 to +0.0539) |
-| v0, mean of log-odds | 37 | 0.2134 | 0.602 | +0.0112 (-0.0335 to +0.0556) |
-| v0, capped 2-98% | 37 | 0.2120 | 0.597 | +0.0098 (-0.0347 to +0.0539) |
+| Market price at collection | 45 | 0.1803 | 0.531 | |
+| v0 (median) | 45 | 0.1878 | 0.539 | +0.0075 (-0.0284 to +0.0448) |
+| v0, mean of log-odds | 45 | 0.1890 | 0.543 | +0.0087 (-0.0273 to +0.0463) |
+| v0, capped 2-98% | 45 | 0.1878 | 0.540 | +0.0075 (-0.0283 to +0.0448) |
+| v0 + Platt scaling (5-fold CV) | 45 | 0.1889 | 0.549 | +0.0086 (-0.0274 to +0.0453) |
 
 ### v0: liquid markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 18 | 0.2223 | 0.633 | |
-| v0 | 18 | 0.2569 | 0.726 | +0.0346 (-0.0203 to +0.0947) |
+| Market price at collection | 21 | 0.1971 | 0.570 | |
+| v0 | 21 | 0.2321 | 0.661 | +0.0350 (-0.0128 to +0.0871) |
 
 ### v0: thin markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 19 | 0.1831 | 0.541 | |
-| v0 | 19 | 0.1693 | 0.474 | -0.0137 (-0.0781 to +0.0485) |
+| Market price at collection | 24 | 0.1656 | 0.496 | |
+| v0 | 24 | 0.1491 | 0.432 | -0.0165 (-0.0702 to +0.0340) |
 
 ### v0: calibration
 
 | Forecast range | n | Avg forecast | Actually happened |
 | --- | --- | --- | --- |
-| 0-10% | 8 | 3% | 0% |
-| 10-30% | 10 | 16% | 50% |
-| 30-50% | 7 | 38% | 57% |
-| 50-70% | 7 | 57% | 43% |
-| 70-90% | 4 | 78% | 75% |
+| 0-10% | 10 | 4% | 0% |
+| 10-30% | 12 | 16% | 42% |
+| 30-50% | 8 | 39% | 50% |
+| 50-70% | 8 | 56% | 50% |
+| 70-90% | 6 | 78% | 83% |
 | 90-100% | 1 | 97% | 100% |
