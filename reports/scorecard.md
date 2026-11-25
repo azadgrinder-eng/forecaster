@@ -1,36 +1,36 @@
 # Forecaster scorecard
 
-Generated 2026-11-24T05:01:01+00:00. Lower Brier and log loss are better.
+Generated 2026-11-25T05:04:07+00:00. Lower Brier and log loss are better.
 
-Questions collected: 285. Resolved yes/no: 50. Voided: 2.
+Questions collected: 300. Resolved yes/no: 52. Voided: 2.
 
 ## Agreement check (no waiting needed)
 
-On 136 liquid markets, v0 sits on average **9.1 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
+On 143 liquid markets, v0 sits on average **8.9 points** from the market price recorded at collection. This catches broken changes; it is not a reason to ship one.
 
 ## v0: all resolved questions
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 50 | 0.1861 | 0.560 | |
-| v0 (median) | 50 | 0.1950 | 0.575 | +0.0089 (-0.0244 to +0.0424) |
-| v0, mean of log-odds | 50 | 0.1958 | 0.580 | +0.0097 (-0.0240 to +0.0437) |
-| v0, capped 2-98% | 50 | 0.1950 | 0.576 | +0.0089 (-0.0243 to +0.0424) |
-| v0 + Platt scaling (5-fold CV) | 50 | 0.2013 | 0.595 | +0.0152 (-0.0162 to +0.0458) |
+| Market price at collection | 52 | 0.1855 | 0.559 | |
+| v0 (median) | 52 | 0.1974 | 0.580 | +0.0118 (-0.0204 to +0.0441) |
+| v0, mean of log-odds | 52 | 0.1981 | 0.584 | +0.0125 (-0.0199 to +0.0447) |
+| v0, capped 2-98% | 52 | 0.1974 | 0.581 | +0.0119 (-0.0204 to +0.0441) |
+| v0 + Platt scaling (5-fold CV) | 52 | 0.1984 | 0.586 | +0.0129 (-0.0168 to +0.0421) |
 
 ### v0: liquid markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 24 | 0.2176 | 0.650 | |
-| v0 | 24 | 0.2565 | 0.758 | +0.0389 (-0.0031 to +0.0831) |
+| Market price at collection | 25 | 0.2106 | 0.633 | |
+| v0 | 25 | 0.2533 | 0.750 | +0.0427 (+0.0017 to +0.0852) |
 
 ### v0: thin markets
 
 | Forecaster | n | Brier | Log loss | Brier minus market (90% CI) |
 | --- | --- | --- | --- | --- |
-| Market price at collection | 26 | 0.1570 | 0.478 | |
-| v0 | 26 | 0.1383 | 0.406 | -0.0188 (-0.0670 to +0.0281) |
+| Market price at collection | 27 | 0.1623 | 0.489 | |
+| v0 | 27 | 0.1456 | 0.423 | -0.0167 (-0.0652 to +0.0286) |
 
 ### v0: calibration
 
@@ -38,7 +38,7 @@ On 136 liquid markets, v0 sits on average **9.1 points** from the market price r
 | --- | --- | --- | --- |
 | 0-10% | 12 | 4% | 8% |
 | 10-30% | 13 | 15% | 38% |
-| 30-50% | 8 | 39% | 50% |
-| 50-70% | 10 | 57% | 50% |
+| 30-50% | 9 | 39% | 56% |
+| 50-70% | 11 | 57% | 55% |
 | 70-90% | 6 | 78% | 83% |
 | 90-100% | 1 | 97% | 100% |
